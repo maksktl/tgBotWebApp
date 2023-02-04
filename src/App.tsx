@@ -25,6 +25,10 @@ function App() {
     const [spreadTo, setSpreadTo] = useState<string>();
     const [error, setError] = useState('');
 
+    const validateNumber = useCallback( (value: string | undefined, min: number) => {
+        return value !== undefined && value.match(/^\d{1,}(\.\d{0,4})?$/) && Number(value) >= min;
+    }, []);
+
     const handleIsActive = useCallback((index: number) => {
         if (index === 0) {
             setIsActive1(true);
@@ -138,7 +142,7 @@ function App() {
         }
 
         setError(errorMessage);
-    }, [setDeposit, setSpreadFrom, setSpreadTo, spreadFrom, spreadTo]);
+    }, [setDeposit, setSpreadFrom, setSpreadTo, spreadFrom, spreadTo, validateNumber]);
 
     const handleResetClick = useCallback(() => {
         setBanks(initialBanks);
@@ -155,7 +159,8 @@ function App() {
     }, [setCryptoAggregators, setCryptoAggregators1, setMakerTaker, setMakerTaker1,
         setFiat, setCrypto, setDeposit, setSpreadFrom, setSpreadTo]);
 
-    const validateInputs = () => {
+
+    const validateInputs = useCallback(() => {
         if (!cryptoAggregators.find(e => e.selected)) return 'Пожалуйста выберите первую биржу';
         if (!cryptoAggregators1.find(e => e.selected)) return 'Пожалуйста выберите вторую биржу';
         if (!fiat.find(e => e.selected)) return 'Пожалуйста выберите фиат';
@@ -165,11 +170,7 @@ function App() {
         if (!validateNumber(spreadTo, 0)) return 'Пожалуйста заполните спред до числом больше 0';
         if (Number(spreadFrom) >= Number(spreadTo)) return 'Спред до должен превышать спред от';
         return '';
-    }
-
-    const validateNumber = (value: string | undefined, min: number) => {
-        return value !== undefined && value.match(/^\d{1,}(\.\d{0,4})?$/) && Number(value) >= min;
-    }
+    }, [cryptoAggregators, cryptoAggregators1, fiat, crypto, deposit, spreadFrom, spreadTo, validateNumber]);
 
     const handleSaveClick = useCallback(() => {
         const error = validateInputs();
