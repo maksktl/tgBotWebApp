@@ -82,26 +82,22 @@ function App() {
 
     const handleClickCombo = useCallback(
         (type: 'crypto' | 'fiat' | 'buy-sell', value: string, isActive: boolean, aggreg?: 'aggreg1' | 'aggreg2') => {
+            const changeSelection = (selectedItems: any[], setSelected: any, item_name: string) => {
+                if(isActive === false && selectedItems.filter(item => item.selected === true).length < 2) {
+                    alert('Вы должны выбрать хотя бы ' + item_name);
+                } else {
+                    setSelected(selectedItems.map((p) =>
+                        p.value === value
+                            ? {...p, selected: isActive}
+                            : p
+                    ));
+                }
+            }
+
             if(type === 'crypto') {
-                if(isActive === false && crypto.filter(item => item.selected === true).length < 2) {
-                    alert('Вы должны выбрать хотя бы одну криптовалюту');
-                } else {
-                    setCrypto(crypto.map((p) =>
-                        p.value === value
-                            ? {...p, selected: isActive}
-                            : p
-                    ));
-                }
+                changeSelection(crypto, setCrypto, 'одну криптовалюту');
             } else if(type === 'fiat') {
-                if(isActive === false && fiat.filter(item => item.selected === true).length < 2) {
-                    alert('Вы должны выбрать хотя бы один фиат');
-                } else {
-                    setFiat(fiat.map((p) =>
-                        p.value === value
-                            ? {...p, selected: isActive}
-                            : p
-                    ));
-                }
+                changeSelection(fiat, setFiat, 'один фиат');
             } else if(type === 'buy-sell') {
                 if(aggreg === 'aggreg1') {
                     setMakerTaker(value);
@@ -115,37 +111,34 @@ function App() {
     );
 
     const handleInputChange = useCallback((value: string, type: "deposit" | "spread_from" | "spread_to") => {
+        let errorMessage = '';
+
         if (type === 'deposit') {
-            if(!value.match(/^\d{1,}(\.\d{0,4})?$/) && value.length > 1) {
-                setError('Депозит может содержать только число, превышающее 0');
+            if (!validateNumber(value, 0)) {
+                errorMessage = 'Депозит может содержать только число, превышающее 0';
             } else {
-                setError('');
                 setDeposit(value);
             }
         } else if (type === 'spread_from') {
-            if(!value.match(/^\d{1,}(\.\d{0,4})?$/) && value.length > 1) {
-                setError('Спред от может содержать только число, превышающее 0');
+            if (!validateNumber(value, 0)) {
+                errorMessage = 'Спред от может содержать только число, превышающее 0';
+            } else if (Number(value) > Number(spreadTo)) {
+                errorMessage = 'Спред до должен превышать спред от';
             } else {
-                if(Number(value) > Number(spreadTo)) {
-                    setError('Спред до должен превышать спред от');
-                } else {
-                    setError('');
-                }
                 setSpreadFrom(value);
             }
         } else if (type === 'spread_to') {
-            if(!value.match(/^\d{1,}(\.\d{0,4})?$/) && value.length > 1) {
-                setError('Спред до может содержать только число, превышающее 0');
+            if (!validateNumber(value, 0)) {
+                errorMessage = 'Спред до может содержать только число, превышающее 0';
+            } else if (Number(value) <= Number(spreadFrom)) {
+                errorMessage = 'Спред до должен превышать спред от';
             } else {
-                if(Number(value) <= Number(spreadFrom)) {
-                    setError('Спред до должен превышать спред от');
-                } else {
-                    setError('');
-                }
                 setSpreadTo(value);
             }
         }
-    }, [setDeposit, setSpreadFrom, setSpreadTo, setError, spreadFrom, spreadTo]);
+
+        setError(errorMessage);
+    }, [setDeposit, setSpreadFrom, setSpreadTo, spreadFrom, spreadTo]);
 
     const handleResetClick = useCallback(() => {
         setBanks(initialBanks);
@@ -162,48 +155,58 @@ function App() {
     }, [setCryptoAggregators, setCryptoAggregators1, setMakerTaker, setMakerTaker1,
         setFiat, setCrypto, setDeposit, setSpreadFrom, setSpreadTo]);
 
+    const validateInputs = () => {
+        if (!cryptoAggregators.find(e => e.selected)) return 'Пожалуйста выберите первую биржу';
+        if (!cryptoAggregators1.find(e => e.selected)) return 'Пожалуйста выберите вторую биржу';
+        if (!fiat.find(e => e.selected)) return 'Пожалуйста выберите фиат';
+        if (!crypto.find(e => e.selected)) return 'Пожалуйста выберите криптовалюту';
+        if (!validateNumber(deposit, 0)) return 'Пожалуйста заполните депозит числом больше 0';
+        if (!validateNumber(spreadFrom, 0)) return 'Пожалуйста заполните спред от числом больше 0';
+        if (!validateNumber(spreadTo, 0)) return 'Пожалуйста заполните спред до числом больше 0';
+        if (Number(spreadFrom) >= Number(spreadTo)) return 'Спред до должен превышать спред от';
+        return '';
+    }
+
+    const validateNumber = (value: string | undefined, min: number) => {
+        return value !== undefined && value.match(/^\d{1,}(\.\d{0,4})?$/) && Number(value) >= min;
+    }
+
     const handleSaveClick = useCallback(() => {
-        if(!cryptoAggregators.find(e => e.selected)) {
-            alert('Пожалуйста выберите первую биржу');
-        } else if(!cryptoAggregators1.find(e => e.selected)) {
-            alert('Пожалуйста выберите вторую биржу');
-        } else if(!fiat.find(e => e.selected)) {
-            alert('Пожалуйста выберите фиат');
-        } else if(!crypto.find(e => e.selected)) {
-            alert('Пожалуйста выберите криптовалюту');
-        } else if(deposit === undefined || (!deposit.match(/^\d{1,}(\.\d{0,4})?$/)) || Number(deposit) < 1) {
-            alert('Пожалуйста заполните депозит числом больше 0');
-        } else if(spreadFrom === undefined || (!spreadFrom.match(/^\d{1,}(\.\d{0,4})?$/)) || Number(spreadFrom) < 1) {
-            alert('Пожалуйста заполните спред от числом больше 0');
-        } else if(spreadTo === undefined || (!spreadTo.match(/^\d{1,}(\.\d{0,4})?$/)) || Number(spreadTo) < 1) {
-            alert('Пожалуйста заполните спред до числом больше 0');
-        } else if(Number(spreadFrom) >= Number(spreadTo)) {
-            alert('Спред до должен превышать спред от');
-        } else {
-            const fiatSend = fiat.map(a => a.selected ===true);
-            const cryptoSend = crypto.map(a => a.selected ===true);
-            const cryptoAggregatorsSend = cryptoAggregators.map(a => a.selected ===true);
-            const cryptoAggregatorsSend1 = cryptoAggregators1.map(a => a.selected ===true);
-            const banksSend = banks.map(a => a.selected ===true);
-            const banksSend1 = banks1.map(a => a.selected ===true);
-            const data = {
-                fiatSend,
-                cryptoSend,
-                deposit,
-                spreadFrom,
-                spreadTo,
-                cryptoAggregatorsSend,
-                makerTaker,
-                banksSend,
-                cryptoAggregatorsSend1,
-                makerTaker1,
-                banksSend1,
-            };
-            tg.sendData(JSON.stringify(data));
-            alert('Сохранено');
+        const error = validateInputs();
+        if (error) {
+            alert(error);
+            return;
         }
-    },[cryptoAggregators, cryptoAggregators1, fiat, crypto,
-        deposit, spreadFrom, spreadTo, makerTaker, makerTaker1, banks, banks1, tg]);
+
+        const data = {
+            fiatSend: fiat.filter(a => a.selected),
+            cryptoSend: crypto.filter(a => a.selected),
+            deposit,
+            spreadFrom,
+            spreadTo,
+            cryptoAggregatorsSend: cryptoAggregators.filter(a => a.selected),
+            makerTaker,
+            banksSend: banks.filter(a => a.selected),
+            cryptoAggregatorsSend1: cryptoAggregators1.filter(a => a.selected),
+            makerTaker1,
+            banksSend1: banks1.filter(a => a.selected)
+        };
+        tg.sendData(JSON.stringify(data));
+        alert('Saved');
+    }, [
+        cryptoAggregators,
+        cryptoAggregators1,
+        fiat,
+        crypto,
+        deposit,
+        spreadFrom,
+        spreadTo,
+        makerTaker,
+        makerTaker1,
+        banks,
+        banks1,
+        tg
+    ]);
 
     const handleCloseButton = useCallback(() => {
         onClose();
