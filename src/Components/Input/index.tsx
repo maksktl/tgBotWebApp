@@ -12,7 +12,8 @@ interface Props {
 export const Input: React.FC<Props> = ({label, type, onChange, value}) => {
 
     const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-        onChange(event.target.value, type);
+        const result = event.target.value.replace(/([^0-9.]+)/, "");
+        onChange(result, type);
     },[onChange, type]);
 
     return (
