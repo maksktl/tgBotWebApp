@@ -150,17 +150,17 @@ function App() {
         }
 
         const data = {
-            fiatSend: fiat.filter(a => a.selected),
-            cryptoSend: crypto.filter(a => a.selected),
+            fiatSend: fiat.filter(a => a.selected).map(a => a.value),
+            cryptoSend: crypto.filter(a => a.selected).map(a => a.value),
             deposit,
             spreadFrom,
             spreadTo,
-            cryptoAggregatorsSend: cryptoAggregators.filter(a => a.selected),
+                cryptoAggregatorsSend: cryptoAggregators.filter(a => a.selected).map(a => a.value),
             makerTaker,
-            banksSend: banks.filter(a => a.selected),
-            cryptoAggregatorsSend1: cryptoAggregators1.filter(a => a.selected),
+            banksSend: banks.filter(a => a.selected).map(a => a.value),
+            cryptoAggregatorsSend1: cryptoAggregators1.filter(a => a.selected).map(a => a.value),
             makerTaker1,
-            banksSend1: banks1.filter(a => a.selected)
+            banksSend1: banks1.filter(a => a.selected).map(a => a.value)
         };
         tg.sendData(JSON.stringify(data));
         alert('Saved');
