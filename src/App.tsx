@@ -37,48 +37,48 @@ function App() {
 
     const handleClick = useCallback(
         (selected: boolean, index: number, type: 'bank' | 'crypto', aggreg: 'aggreg1' | 'aggreg2') => {
-        if (type === 'bank' && aggreg === 'aggreg1') {
-            setBanks((prev) =>
-                prev.map((bank, i) => {
-                    if (i !== index) {
-                        return bank;
-                    }
-                    const temp = Object.assign({}, bank, { selected: selected});
-                    return temp;
-                })
-            );
-        } else if (type === 'bank' && aggreg === 'aggreg2') {
-            setBanks1((prev) =>
-                prev.map((bank, i) => {
-                    if (i !== index) {
-                        return bank;
-                    }
-                    const temp = Object.assign({}, bank, { selected: selected});
-                    return temp;
-                })
-            );
-        } else if(type === 'crypto' && aggreg === 'aggreg1') {
-            setCryptoAggregators((prev) =>
-                prev.map((cryptoAggregator, i) => {
-                    if (i !== index) {
-                        return cryptoAggregator;
-                    }
-                    const temp = Object.assign({}, cryptoAggregator, { selected: selected});
-                    return temp;
-                })
-            );
-        } else if(type === 'crypto' && aggreg === 'aggreg2') {
-            setCryptoAggregators1((prev) =>
-                prev.map((cryptoAggregator, i) => {
-                    if (i !== index) {
-                        return cryptoAggregator;
-                    }
-                    const temp = Object.assign({}, cryptoAggregator, { selected: selected});
-                    return temp;
-                })
-            );
-        }
-    },[setBanks, setCryptoAggregators, setBanks1, setCryptoAggregators1]);
+            if (type === 'bank' && aggreg === 'aggreg1') {
+                setBanks((prev) =>
+                    prev.map((bank, i) => {
+                        if (i !== index) {
+                            return bank;
+                        }
+                        const temp = Object.assign({}, bank, { selected: selected});
+                        return temp;
+                    })
+                );
+            } else if (type === 'bank' && aggreg === 'aggreg2') {
+                setBanks1((prev) =>
+                    prev.map((bank, i) => {
+                        if (i !== index) {
+                            return bank;
+                        }
+                        const temp = Object.assign({}, bank, { selected: selected});
+                        return temp;
+                    })
+                );
+            } else if(type === 'crypto' && aggreg === 'aggreg1') {
+                setCryptoAggregators((prev) =>
+                    prev.map((cryptoAggregator, i) => {
+                        if (i !== index) {
+                            return cryptoAggregator;
+                        }
+                        const temp = Object.assign({}, cryptoAggregator, { selected: selected});
+                        return temp;
+                    })
+                );
+            } else if(type === 'crypto' && aggreg === 'aggreg2') {
+                setCryptoAggregators1((prev) =>
+                    prev.map((cryptoAggregator, i) => {
+                        if (i !== index) {
+                            return cryptoAggregator;
+                        }
+                        const temp = Object.assign({}, cryptoAggregator, { selected: selected});
+                        return temp;
+                    })
+                );
+            }
+        },[setBanks, setCryptoAggregators, setBanks1, setCryptoAggregators1]);
 
     const handleClickCombo = useCallback(
         (type: 'crypto' | 'fiat' | 'buy-sell', value: string, isActive: boolean, aggreg?: 'aggreg1' | 'aggreg2') => {
@@ -203,49 +203,53 @@ function App() {
             alert('Сохранено');
         }
     },[cryptoAggregators, cryptoAggregators1, fiat, crypto,
-    deposit, spreadFrom, spreadTo, makerTaker, makerTaker1, banks, banks1, tg]);
+        deposit, spreadFrom, spreadTo, makerTaker, makerTaker1, banks, banks1, tg]);
 
     const handleCloseButton = useCallback(() => {
         onClose();
     },[onClose]);
 
     return (
-    <div className="App">
-        <LogoHeading />
-        <p className="label">Фиат</p>
-        <ComboBox values={fiat} className={'fiat'} type={'fiat'} onClick={handleClickCombo}/>
-        <p className="label">Криптовалюта</p>
-        <ComboBox values={crypto} className={'crypto'} type={'crypto'} onClick={handleClickCombo}/>
-        <Inputs
-            onChange={handleInputChange}
-            deposit={deposit}
-            spreadFrom={spreadFrom}
-            spreadTo={spreadTo}
-            error={error}
-        ></Inputs>
-        <Aggregator
-            label={'aggreg1'}
-            active={isActive1}
-            onClick={handleIsActive}
-            onClickItem={handleClick}
-            banks={banks}
-            index={0}
-            cryptoAggregators={cryptoAggregators}
-            onClickCombo={handleClickCombo}
-        ></Aggregator>
-        <Aggregator
-            label={'aggreg2'}
-            active={isActive2}
-            onClick={handleIsActive}
-            onClickItem={handleClick}
-            banks={banks1}
-            index={1}
-            onClickCombo={handleClickCombo}
-            cryptoAggregators={cryptoAggregators1}
-        ></Aggregator>
-        <ResetSetButtons onClickReset={handleResetClick} onClickSave={handleSaveClick}></ResetSetButtons>
-        <button className="return" onClick={handleCloseButton}>Вернуться назад</button>
-    </div>
+        <div className="App">
+            <LogoHeading />
+            <p className="label">Фиат</p>
+            <ComboBox values={fiat} className={'fiat'} type={'fiat'} onClick={handleClickCombo}/>
+            <p className="label">Криптовалюта</p>
+            <ComboBox values={crypto} className={'crypto'} type={'crypto'} onClick={handleClickCombo}/>
+            <Inputs
+                onChange={handleInputChange}
+                deposit={deposit}
+                spreadFrom={spreadFrom}
+                spreadTo={spreadTo}
+                error={error}
+            ></Inputs>
+            <Aggregator
+                makerTaker={makerTaker}
+                makerTaker1={makerTaker1}
+                label={'aggreg1'}
+                active={isActive1}
+                onClick={handleIsActive}
+                onClickItem={handleClick}
+                banks={banks}
+                index={0}
+                cryptoAggregators={cryptoAggregators}
+                onClickCombo={handleClickCombo}
+            ></Aggregator>
+            <Aggregator
+                makerTaker={makerTaker1}
+                makerTaker1={makerTaker1}
+                label={'aggreg2'}
+                active={isActive2}
+                onClick={handleIsActive}
+                onClickItem={handleClick}
+                banks={banks1}
+                index={1}
+                onClickCombo={handleClickCombo}
+                cryptoAggregators={cryptoAggregators1}
+            ></Aggregator>
+            <ResetSetButtons onClickReset={handleResetClick} onClickSave={handleSaveClick}></ResetSetButtons>
+            <button className="return" onClick={handleCloseButton}>Вернуться назад</button>
+        </div>
     );
 }
 
