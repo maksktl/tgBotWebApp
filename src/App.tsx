@@ -185,7 +185,7 @@ function App() {
             const cryptoAggregatorsSend = cryptoAggregators.map(a => a.selected ===true);
             const cryptoAggregatorsSend1 = cryptoAggregators1.map(a => a.selected ===true);
             const banksSend = banks.map(a => a.selected ===true);
-            const banksSend1 = banks.map(a => a.selected ===true);
+            const banksSend1 = banks1.map(a => a.selected ===true);
             const data = {
                 fiatSend,
                 cryptoSend,
