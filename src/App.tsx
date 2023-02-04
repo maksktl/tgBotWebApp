@@ -116,14 +116,14 @@ function App() {
 
     const handleInputChange = useCallback((value: string, type: "deposit" | "spread_from" | "spread_to") => {
         if (type === 'deposit') {
-            if(!value.match(/^\d{1,}(\.\d{0,4})?$/)) {
+            if(!value.match(/^\d{1,}(\.\d{0,4})?$/) && value.length > 1) {
                 setError('Депозит может содержать только число, превышающее 0');
             } else {
                 setError('');
+                setDeposit(value);
             }
-            setDeposit(value);
         } else if (type === 'spread_from') {
-            if(!value.match(/^\d{1,}(\.\d{0,4})?$/)) {
+            if(!value.match(/^\d{1,}(\.\d{0,4})?$/) && value.length > 1) {
                 setError('Спред от может содержать только число, превышающее 0');
             } else {
                 if(Number(value) > Number(spreadTo)) {
@@ -131,10 +131,10 @@ function App() {
                 } else {
                     setError('');
                 }
+                setSpreadFrom(value);
             }
-            setSpreadFrom(value);
         } else if (type === 'spread_to') {
-            if(!value.match(/^\d{1,}(\.\d{0,4})?$/)) {
+            if(!value.match(/^\d{1,}(\.\d{0,4})?$/) && value.length > 1) {
                 setError('Спред до может содержать только число, превышающее 0');
             } else {
                 if(Number(value) <= Number(spreadFrom)) {
@@ -142,8 +142,8 @@ function App() {
                 } else {
                     setError('');
                 }
+                setSpreadTo(value);
             }
-            setSpreadTo(value);
         }
     }, [setDeposit, setSpreadFrom, setSpreadTo, setError, spreadFrom, spreadTo]);
 
