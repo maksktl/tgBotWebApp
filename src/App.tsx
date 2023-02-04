@@ -41,48 +41,18 @@ function App() {
 
     const handleClick = useCallback(
         (selected: boolean, index: number, type: 'bank' | 'crypto', aggreg: 'aggreg1' | 'aggreg2') => {
-            if (type === 'bank' && aggreg === 'aggreg1') {
-                setBanks((prev) =>
-                    prev.map((bank, i) => {
-                        if (i !== index) {
-                            return bank;
-                        }
-                        const temp = Object.assign({}, bank, { selected: selected});
-                        return temp;
-                    })
-                );
-            } else if (type === 'bank' && aggreg === 'aggreg2') {
-                setBanks1((prev) =>
-                    prev.map((bank, i) => {
-                        if (i !== index) {
-                            return bank;
-                        }
-                        const temp = Object.assign({}, bank, { selected: selected});
-                        return temp;
-                    })
-                );
-            } else if(type === 'crypto' && aggreg === 'aggreg1') {
-                setCryptoAggregators((prev) =>
-                    prev.map((cryptoAggregator, i) => {
-                        if (i !== index) {
-                            return cryptoAggregator;
-                        }
-                        const temp = Object.assign({}, cryptoAggregator, { selected: selected});
-                        return temp;
-                    })
-                );
-            } else if(type === 'crypto' && aggreg === 'aggreg2') {
-                setCryptoAggregators1((prev) =>
-                    prev.map((cryptoAggregator, i) => {
-                        if (i !== index) {
-                            return cryptoAggregator;
-                        }
-                        const temp = Object.assign({}, cryptoAggregator, { selected: selected});
-                        return temp;
-                    })
-                );
-            }
-        },[setBanks, setCryptoAggregators, setBanks1, setCryptoAggregators1]);
+            const setArray = type === 'bank' ? (aggreg === 'aggreg1' ? setBanks : setBanks1) : (aggreg === 'aggreg1' ? setCryptoAggregators : setCryptoAggregators1);
+            setArray((prev) =>
+                prev.map((item, i) => {
+                    if (i !== index) {
+                        return item;
+                    }
+                    const temp = Object.assign({}, item, { selected: selected });
+                    return temp;
+                })
+            );
+        }, [setBanks, setCryptoAggregators, setBanks1, setCryptoAggregators1]
+    );
 
     const handleClickCombo = useCallback(
         (type: 'crypto' | 'fiat' | 'buy-sell', value: string, isActive: boolean, aggreg?: 'aggreg1' | 'aggreg2') => {
