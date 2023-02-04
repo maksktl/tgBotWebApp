@@ -288,6 +288,7 @@ input {
   }
   .active {
     font-weight: bold;
+    color: $buttonText;
     background-color: $selected;
   }
 }
