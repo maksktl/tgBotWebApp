@@ -23,7 +23,7 @@ $buttonText: var(--tg-theme-button-text-color);
 //$textSecondary: #B4C3D3;
 $textSecondary: var(--tg-theme-hint-color);
 
-$icons: #677380;
+$icons: var(--tg-theme-secondary-bg-color);
 
 $delete: #CC5E5E;
 
@@ -156,8 +156,8 @@ body {
   display: block;
   margin: 0 auto;
   background-color: $icons;
-  width: 62px;
-  height: 62px;
+  width: 124px;
+  height: 124px;
   padding: 2px;
   border-radius: 50%;
   content: url("/imgs/лого.png");
