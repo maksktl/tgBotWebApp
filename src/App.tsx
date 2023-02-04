@@ -205,7 +205,8 @@ function App() {
         makerTaker1,
         banks,
         banks1,
-        tg
+        tg,
+        validateInputs
     ]);
 
     const handleCloseButton = useCallback(() => {
