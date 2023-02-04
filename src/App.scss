@@ -1,0 +1,293 @@
+$background: #191919;
+//$background: var(--tg-theme-bg-color);
+
+$highlighted: #D2F862;
+//$highlighted: var(--tg-theme-link-color);
+
+$selected: #A85ED5;
+//$selected: var(--tg-theme-button-color);
+
+$inputBackground: #27262B;
+//$inputBackground: var(--tg-theme-secondary-bg-color);
+
+$white: #FFFFFF;
+
+$text: #FFFFFF;
+//$text: var(--tg-theme-text-color);
+
+$black: #000000;
+
+$buttonText: #FFFFFF;
+//$buttonText: var(--tg-theme-button-text-color);
+
+$textSecondary: #B4C3D3;
+//$textSecondary: var(--tg-theme-hint-color);
+
+$icons: #677380;
+
+$delete: #CC5E5E;
+
+@font-face {
+  font-family: 'IBMPlexSans';
+  src: local('IBMPlexSans'), url(./fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'IBMPlexSans';
+  font-weight: 900;
+  src: local('IBMPlexSans'), url(./fonts/IBM_Plex_Sans/IBMPlexSans-Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'IBMPlexSans';
+  font-weight: 600;
+  src: local('IBMPlexSans'), url(./fonts/IBM_Plex_Sans/IBMPlexSans-SemiBold.ttf) format('truetype');
+}
+
+.error {
+  color: $delete;
+}
+
+body {
+  background-color: $background;
+  font-family: 'IBMPlexSans';
+  max-width: 400px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.App {
+  padding: 30px 25px;
+}
+
+.LogoHeader {
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $highlighted;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  border-left: 2px solid $inputBackground;
+  border-right: 2px solid $inputBackground;
+  background-clip: padding-box;
+  background: $selected;
+  border-radius: 10px;
+}
+
+.menuItem {
+  list-style-type: none;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21px;
+  color: $white;
+}
+
+.selected {
+  color: $highlighted;
+}
+
+.check {
+  color: $highlighted;
+}
+
+.Choose {
+  margin-top: 20px;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  color: $buttonText;
+}
+
+.reset {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  height: 16px;
+  background-color: $background;
+  border: 0;
+  padding: 0;
+  color: $textSecondary;
+  cursor: pointer;
+}
+
+.save {
+  cursor: pointer;
+  padding: 15px;
+  gap: 5px;
+  height: 46px;
+  background-color: $selected;
+  border: 0;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  border-radius: 5px;
+  color: $buttonText;
+}
+
+.return {
+  margin-top: 30px;
+  width: 100%;
+  cursor: pointer;
+  padding: 15px;
+  gap: 5px;
+  height: 46px;
+  background-color: $selected;
+  border: 0;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  border-radius: 5px;
+  color: $buttonText;
+}
+
+.Logo {
+  display: block;
+  margin: 0 auto;
+  background-color: $icons;
+  width: 62px;
+  height: 62px;
+  padding: 2px;
+  border-radius: 50%;
+  content: url("/imgs/лого.png");
+}
+
+.Header {
+  color: $text;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 21px;
+  text-align: center;
+}
+
+.MuiBadge-badge {
+  background: $delete;
+  color: $white;
+  cursor: pointer;
+}
+
+.Badge {
+  background: $highlighted;
+  padding: 6px 10px;
+  color: $black;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  position: relative;
+}
+
+.Stock {
+  background: $inputBackground;
+  border: 1px solid $textSecondary;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.textStock {
+  margin: 0;
+  font-weight: 400;
+  font-size: 8px;
+  line-height: 10px;
+  color: $textSecondary;
+}
+
+.textStockButton {
+  color: $highlighted;
+  cursor: pointer;
+}
+
+.info {
+  color: $textSecondary;
+}
+
+input {
+  padding: 9px 10px;
+  width: 80px;
+  height: 20px;
+  border: 1px solid $textSecondary;
+  background-color: $inputBackground;
+  color: $textSecondary;
+  border-radius: 5px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  &:focus {
+    color: $white;
+  }
+}
+
+.label {
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  color: $textSecondary;
+  margin: 10px 0 5px 0;
+}
+
+.Aggregator {
+  margin-top: 30px;
+  border-left: 2px solid $textSecondary;
+  padding-left: 10px;
+  .label {
+    margin: 10px 0 10px 0;
+  }
+}
+
+.activeAggregator {
+  margin-top: 30px;
+  border-left: 2px solid $selected;
+  padding-left: 10px;
+  .label {
+    margin: 10px 0 10px 0;
+  }
+}
+
+.ButtonGroup {
+  width: 100%;
+  height: 40px;
+  .fiat {
+    padding: 9px 27px;
+  }
+  .crypto {
+    padding: 9px 11px;
+  }
+  .buy-sell {
+    text-transform: none;
+    padding: 9px 55px;
+  }
+  .MuiButton-root {
+    background-color: $inputBackground;
+    border: solid 1px $textSecondary;
+    color: $buttonText;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 22px;
+    border-radius: 5px;
+    &:hover {
+      background-color: $inputBackground;
+      border: solid 1px $textSecondary;
+    }
+  }
+  .active:hover {
+    background-color: $selected;
+    border: solid 1px $textSecondary;
+  }
+  .active {
+    font-weight: bold;
+    background-color: $selected;
+  }
+}

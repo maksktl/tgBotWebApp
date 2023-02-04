@@ -1,0 +1,264 @@
+@charset "UTF-8";
+@font-face {
+  font-family: "IBMPlexSans";
+  src: local("IBMPlexSans"), url(./fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf) format("truetype");
+}
+@font-face {
+  font-family: "IBMPlexSans";
+  font-weight: 900;
+  src: local("IBMPlexSans"), url(./fonts/IBM_Plex_Sans/IBMPlexSans-Bold.ttf) format("truetype");
+}
+@font-face {
+  font-family: "IBMPlexSans";
+  font-weight: 600;
+  src: local("IBMPlexSans"), url(./fonts/IBM_Plex_Sans/IBMPlexSans-SemiBold.ttf) format("truetype");
+}
+.error {
+  color: #CC5E5E;
+}
+
+body {
+  background-color: #191919;
+  font-family: "IBMPlexSans";
+  max-width: 400px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.App {
+  padding: 30px 25px;
+}
+
+.LogoHeader {
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D2F862;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  border-left: 2px solid #27262B;
+  border-right: 2px solid #27262B;
+  background-clip: padding-box;
+  background: #A85ED5;
+  border-radius: 10px;
+}
+
+.menuItem {
+  list-style-type: none;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21px;
+  color: #FFFFFF;
+}
+
+.selected {
+  color: #D2F862;
+}
+
+.check {
+  color: #D2F862;
+}
+
+.Choose {
+  margin-top: 20px;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  color: #FFFFFF;
+}
+
+.reset {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  height: 16px;
+  background-color: #191919;
+  border: 0;
+  padding: 0;
+  color: #B4C3D3;
+  cursor: pointer;
+}
+
+.save {
+  cursor: pointer;
+  padding: 15px;
+  gap: 5px;
+  height: 46px;
+  background-color: #A85ED5;
+  border: 0;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  border-radius: 5px;
+  color: #FFFFFF;
+}
+
+.return {
+  margin-top: 30px;
+  width: 100%;
+  cursor: pointer;
+  padding: 15px;
+  gap: 5px;
+  height: 46px;
+  background-color: #A85ED5;
+  border: 0;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  border-radius: 5px;
+  color: #FFFFFF;
+}
+
+.Logo {
+  display: block;
+  margin: 0 auto;
+  background-color: #677380;
+  width: 62px;
+  height: 62px;
+  padding: 2px;
+  border-radius: 50%;
+  content: url("/imgs/лого.png");
+}
+
+.Header {
+  color: #FFFFFF;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 21px;
+  text-align: center;
+}
+
+.MuiBadge-badge {
+  background: #CC5E5E;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.Badge {
+  background: #D2F862;
+  padding: 6px 10px;
+  color: #000000;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  position: relative;
+}
+
+.Stock {
+  background: #27262B;
+  border: 1px solid #B4C3D3;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.textStock {
+  margin: 0;
+  font-weight: 400;
+  font-size: 8px;
+  line-height: 10px;
+  color: #B4C3D3;
+}
+
+.textStockButton {
+  color: #D2F862;
+  cursor: pointer;
+}
+
+.info {
+  color: #B4C3D3;
+}
+
+input {
+  padding: 9px 10px;
+  width: 80px;
+  height: 20px;
+  border: 1px solid #B4C3D3;
+  background-color: #27262B;
+  color: #B4C3D3;
+  border-radius: 5px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+}
+input:focus {
+  color: #FFFFFF;
+}
+
+.label {
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  color: #B4C3D3;
+  margin: 10px 0 5px 0;
+}
+
+.Aggregator {
+  margin-top: 30px;
+  border-left: 2px solid #B4C3D3;
+  padding-left: 10px;
+}
+.Aggregator .label {
+  margin: 10px 0 10px 0;
+}
+
+.activeAggregator {
+  margin-top: 30px;
+  border-left: 2px solid #A85ED5;
+  padding-left: 10px;
+}
+.activeAggregator .label {
+  margin: 10px 0 10px 0;
+}
+
+.ButtonGroup {
+  width: 100%;
+  height: 40px;
+}
+.ButtonGroup .fiat {
+  padding: 9px 27px;
+}
+.ButtonGroup .crypto {
+  padding: 9px 11px;
+}
+.ButtonGroup .buy-sell {
+  text-transform: none;
+  padding: 9px 55px;
+}
+.ButtonGroup .MuiButton-root {
+  background-color: #27262B;
+  border: solid 1px #B4C3D3;
+  color: #FFFFFF;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 22px;
+  border-radius: 5px;
+}
+.ButtonGroup .MuiButton-root:hover {
+  background-color: #27262B;
+  border: solid 1px #B4C3D3;
+}
+.ButtonGroup .active:hover {
+  background-color: #A85ED5;
+  border: solid 1px #B4C3D3;
+}
+.ButtonGroup .active {
+  font-weight: bold;
+  background-color: #A85ED5;
+}
+
+/*# sourceMappingURL=App.css.map */
