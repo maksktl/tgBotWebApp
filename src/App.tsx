@@ -90,22 +90,27 @@ function App() {
         if (type === 'deposit') {
             if (!validateNumber(value, 0)) {
                 errorMessage = 'Депозит может содержать только число, превышающее 0';
+                setDeposit('0')
             } else {
                 setDeposit(value);
             }
         } else if (type === 'spread_from') {
             if (!validateNumber(value, 0)) {
                 errorMessage = 'Спред от может содержать только число, превышающее 0';
+                setSpreadFrom('0')
             } else if (Number(value) > Number(spreadTo)) {
                 errorMessage = 'Спред до должен превышать спред от';
+                setSpreadFrom(spreadTo)
             } else {
                 setSpreadFrom(value);
             }
         } else if (type === 'spread_to') {
             if (!validateNumber(value, 0)) {
                 errorMessage = 'Спред до может содержать только число, превышающее 0';
+                setSpreadTo('0')
             } else if (Number(value) <= Number(spreadFrom)) {
                 errorMessage = 'Спред до должен превышать спред от';
+                setSpreadTo(spreadFrom)
             } else {
                 setSpreadTo(value);
             }
