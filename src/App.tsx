@@ -26,7 +26,7 @@ function App() {
     const [error, setError] = useState('');
 
     const validateNumber = useCallback( (value: string | undefined, min: number) => {
-        return value !== undefined && value.match(/^\d{1,}(\.\d{0,4})?$/) && Number(value) >= min;
+        return value !== undefined && value.match(/^-?(0|[1-9]\d*)(\.\d+)?$/) && Number(value) >= min;
     }, []);
 
     const handleIsActive = useCallback((index: number) => {
