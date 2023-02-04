@@ -88,14 +88,20 @@ function App() {
         let errorMessage = '';
 
         if (type === 'deposit') {
-            if (!validateNumber(value, 0)) {
+            if(value === ''){
+                setDeposit('');
+            }
+            else if (!validateNumber(value, 0)) {
                 errorMessage = 'Депозит может содержать только число, превышающее 0';
                 setDeposit('0')
             } else {
                 setDeposit(value);
             }
         } else if (type === 'spread_from') {
-            if (!validateNumber(value, 0)) {
+            if(value === ''){
+                setSpreadFrom('');
+            }
+            else if (!validateNumber(value, 0)) {
                 errorMessage = 'Спред от может содержать только число, превышающее 0';
                 setSpreadFrom('0')
             } else if (Number(value) > Number(spreadTo)) {
@@ -105,7 +111,10 @@ function App() {
                 setSpreadFrom(value);
             }
         } else if (type === 'spread_to') {
-            if (!validateNumber(value, 0)) {
+            if(value === ''){
+                setSpreadTo('');
+            }
+            else  if (!validateNumber(value, 0)) {
                 errorMessage = 'Спред до может содержать только число, превышающее 0';
                 setSpreadTo('0')
             } else if (Number(value) <= Number(spreadFrom)) {
