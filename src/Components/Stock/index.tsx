@@ -28,6 +28,9 @@ export const Stock: React.FC<Props> = ({values, onClick, type}) => {
         setOpenDropDown(false);
     }, [setOpenDropDown])
 
+    const label = type === 'bank' ? 'Чтобы добавить способ оплаты, нажмите на пустое место или ' :
+        'Чтобы добавить биржу, нажмите на пустое место или ';
+
     return (
         <Box className="Stock">
             <Grid container sx={{ pt: '5px' }} onClick={handleClickOpenDropDown}>
@@ -43,7 +46,7 @@ export const Stock: React.FC<Props> = ({values, onClick, type}) => {
             <Box sx={{ display: 'inline-flex', ml: '10px', mt: '10px', mb: '10px' }}>
                 <InfoOutlinedIcon className="info" sx={{ width: '10px', height: '10px', mr: '5px' }} />
                 <p className="textStock">
-                    Чтобы добавить биржу, нажмите на пустое место или {' '}
+                    {label}
                     <span className="textStockButton" onClick={handleClickOpenDropDown}>
                         нажмите сюда
                     </span>
