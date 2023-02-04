@@ -58,7 +58,7 @@ function App() {
         (type: 'crypto' | 'fiat' | 'buy-sell', value: string, isActive: boolean, aggreg?: 'aggreg1' | 'aggreg2') => {
             const changeSelection = (selectedItems: any[], setSelected: any, item_name: string) => {
                 if(isActive === false && selectedItems.filter(item => item.selected === true).length < 2) {
-                    alert('Вы должны выбрать хотя бы ' + item_name);
+                    tg.showAlert('Вы должны выбрать хотя бы ' + item_name);
                 } else {
                     setSelected(selectedItems.map((p) =>
                         p.value === value
@@ -145,7 +145,7 @@ function App() {
     const handleSaveClick = useCallback(() => {
         const error = validateInputs();
         if (error) {
-            alert(error);
+            tg.showAlert(error);
             return;
         }
 
@@ -163,7 +163,6 @@ function App() {
             banksSend1: banks1.filter(a => a.selected).map(a => a.value)
         };
         tg.sendData(JSON.stringify(data));
-        alert('Saved');
     }, [
         cryptoAggregators,
         cryptoAggregators1,
