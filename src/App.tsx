@@ -81,7 +81,7 @@ function App() {
                 }
             }
         },
-        [setMakerTaker, setMakerTaker1, crypto, fiat, setFiat, setCrypto]
+        [setMakerTaker, setMakerTaker1, crypto, fiat, setFiat, setCrypto, tg]
     );
 
     const handleInputChange = useCallback((value: string, type: "deposit" | "spread_from" | "spread_to") => {
