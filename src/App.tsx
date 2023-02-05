@@ -92,6 +92,8 @@ function App() {
             setValue(value);
         } else if(!validateNumber(value, 0)){
             setValue(lastValue);
+        } else {
+            setValue(value);
         }
     }, [setDeposit, setSpreadFrom, setSpreadTo, spreadFrom, spreadTo, validateNumber, deposit]);
 
