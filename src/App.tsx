@@ -26,7 +26,7 @@ function App() {
     const [error, setError] = useState('');
 
     const validateNumber = useCallback( (value: string | undefined, min: number) => {
-        return value !== undefined && value.match(/^-?(0|[1-9]\d*)(\.\d+)?$/) && Number(value) >= min;
+        return value !== undefined && value.match(/^-?(0|[1-9]\d*)(\.\d*)?$/) && Number(value) >= min;
     }, []);
 
     const handleIsActive = useCallback((index: number) => {
@@ -85,44 +85,28 @@ function App() {
     );
 
     const handleInputChange = useCallback((value: string, type: "deposit" | "spread_from" | "spread_to") => {
-        let errorMessage = '';
+        const setValue = type === 'deposit' ? setDeposit : (type === 'spread_from' ? setSpreadFrom : setSpreadTo);
+        const lastValue = type === 'deposit' ? deposit : (type === 'spread_from' ? spreadFrom : spreadTo);
 
-        if (type === 'deposit') {
-            if(value === ''){
-                setDeposit('');
-            }
-            else if (!validateNumber(value, 0)) {
-                errorMessage = 'Депозит может содержать только число, превышающее 0';
-                setDeposit('0')
-            } else {
-                setDeposit(value);
-            }
-        } else if (type === 'spread_from') {
-            if(value === ''){
-                setSpreadFrom('');
-            }
-            else if (!validateNumber(value, 0)) {
-                errorMessage = 'Спред от может содержать только число, превышающее 0';
-                setSpreadFrom('0')
-            } else if (Number(value) > Number(spreadTo)) {
-                errorMessage = 'Спред до должен превышать спред от';
-                setSpreadFrom(spreadTo)
-            } else {
-                setSpreadFrom(value);
-            }
-        } else if (type === 'spread_to') {
-            if(value === ''){
-                setSpreadTo('');
-            }
-            else  if (!validateNumber(value, 0)) {
-                errorMessage = 'Спред до может содержать только число, превышающее 0';
-                setSpreadTo('0')
-            } else if (Number(value) <= Number(spreadFrom)) {
-                errorMessage = 'Спред до должен превышать спред от';
-                setSpreadTo(spreadFrom)
-            } else {
-                setSpreadTo(value);
-            }
+        if(value === ''){
+            setValue(value);
+        } else if(!validateNumber(value, 0)){
+            setValue(lastValue);
+        }
+    }, [setDeposit, setSpreadFrom, setSpreadTo, spreadFrom, spreadTo, validateNumber, deposit]);
+
+    const handleInputBlur = useCallback((value: string, type: "deposit" | "spread_from" | "spread_to") => {
+        let errorMessage = '';
+        const setValue = type === 'deposit' ? setDeposit : (type === 'spread_from' ? setSpreadFrom : setSpreadTo);
+        let textError = type === 'deposit' ? '"Депозит"' : (type === 'spread_from' ? '"Спред от"' : '"Спред до"');
+        value = value === '' ? '0' : value;
+        if(!validateNumber(value, 0)){
+            errorMessage = textError + ' может содержать только положительное число';
+            value = '0';
+        }
+        setValue(value);
+        if(Number(spreadFrom) > Number(spreadTo)){
+            setSpreadTo(spreadFrom);
         }
 
         setError(errorMessage);
@@ -206,6 +190,7 @@ function App() {
             <ComboBox values={crypto} className={'crypto'} type={'crypto'} onClick={handleClickCombo}/>
             <Inputs
                 onChange={handleInputChange}
+                onBlur={handleInputBlur}
                 deposit={deposit}
                 spreadFrom={spreadFrom}
                 spreadTo={spreadTo}
