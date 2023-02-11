@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ComboBox} from './Components/ComboBox';
 import {initialFiat, initialCrypto, initialBanks, initialAggregators, exchangesBanksMap} from './constants';
 import './App.scss';
@@ -40,28 +40,39 @@ function App() {
         }
     }, [setIsActive1, setIsActive2]);
 
+    useEffect(() => {
+        setBanks(cryptoAggregators
+            .filter(exchange => exchange.selected)
+            .reduce((result: Array<{ value: string, selected: boolean }>, exchange: { value: string, selected: boolean }) => {
+                console.log('Added ' + exchange.value + ' ' + exchange.selected)
+                return [
+                    ...result,
+                    ...exchangesBanks[exchange.value].map(payType => ({value: payType, selected: false})),
+                ]
+            }, [])
+            .filter((payment, index, self) => self.findIndex(p => p.value === payment.value) === index))
+        setBanks1(cryptoAggregators1
+            .filter(exchange => exchange.selected)
+            .reduce((result: Array<{ value: string, selected: boolean }>, exchange: { value: string, selected: boolean }) => {
+                return [
+                    ...result,
+                    ...exchangesBanks[exchange.value].map(payType => ({value: payType, selected: false})),
+                ]
+            }, [])
+            .filter((payment, index, self) => self.findIndex(p => p.value === payment.value) === index))
+
+    }, [cryptoAggregators, cryptoAggregators1, exchangesBanks]);
+
     const handleClick = useCallback(
         (selected: boolean, index: number, type: 'bank' | 'crypto', aggreg: 'aggreg1' | 'aggreg2') => {
             console.log(index + ' ' + selected + ' ' + type)
-            console.log(cryptoAggregators)
             const setArray = type === 'bank' ? (aggreg === 'aggreg1' ? setBanks : setBanks1) : (aggreg === 'aggreg1' ? setCryptoAggregators : setCryptoAggregators1);
             setArray(prev => {
                 const updatedPrev = [...prev];
-                updatedPrev[index].selected = !updatedPrev[index].selected;
+                updatedPrev[index].selected = selected;
                 return updatedPrev;
             });
-            console.log(cryptoAggregators)
-            if (type === 'crypto') {
-                (aggreg === 'aggreg1' ? setBanks : setBanks1)((aggreg === 'aggreg1' ? cryptoAggregators : cryptoAggregators1)
-                    .filter(exchange => exchange.selected)
-                    .reduce((result: Array<{ value: string, selected: boolean }>, exchange: { value: string, selected: boolean }) => [
-                        ...result,
-                        ...exchangesBanks[exchange.value].map(payType => ({value: payType, selected: false})),
-                    ], [])
-                    .filter((payment, index, self) => self.findIndex(p => p.value === payment.value) === index))
-                console.log(banks);
-            }
-        }, [setBanks, setCryptoAggregators, setBanks1, setCryptoAggregators1, exchangesBanks, cryptoAggregators, cryptoAggregators1, banks]
+        }, [setBanks, setCryptoAggregators, setBanks1, setCryptoAggregators1]
     );
 
     const handleClickCombo = useCallback(
