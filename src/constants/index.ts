@@ -17,7 +17,7 @@ export const aggreg1 = ['Первая биржа', 'Покупаем как'];
 export const aggreg2 = ['Вторая биржа', 'Продаем как'];
 
 
-export const exchangesBanksMap = {
+export const exchangesBanksMap: { [key: string]: Array<string> } = {
     'Binance':[
         "Tinkoff",
         "RosBank",
@@ -229,7 +229,7 @@ export const exchangesBanksMap = {
     ]
 }
 
-export const initialBanks = exchangesBanksMap.Binance.map(bank => ({value: bank, selected: false}))
+export const initialBanks: Array<{value: string, selected: boolean}> = exchangesBanksMap.Binance.map(bank => ({value: bank, selected: false}))
 
 // export const initialBanks = [
 //     {value: 'Credit Europe Bank', selected: false},

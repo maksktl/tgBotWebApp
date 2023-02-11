@@ -53,23 +53,16 @@ function App() {
                 })
             );
             if (type === 'crypto') {
-                console.log(banks);
-                console.log(banks1);
                 // @ts-ignore
-                (aggreg === 'aggreg1' ? setBanks : setBanks1)((aggreg === 'aggreg1' ? cryptoAggregators : cryptoAggregators1)
+                (aggreg === 'aggreg1' ? setBanks : setBanks1)([].concat(...(aggreg === 'aggreg1' ? cryptoAggregators : cryptoAggregators1)
                     .filter(exchange => exchange.selected)
-                    .map((allPayments, exchange) => {
-                        // @ts-ignore
-                        console.log([...allPayments, ...exchangesBanks[exchange["value"]]]);
-                        // @ts-ignore
-                        return [...allPayments, ...exchangesBanks[exchange["value"]]];
-                    }, [])
+                    .map(exchange => ({value: exchangesBanks[exchange.value], selected: false})).flat()
                     .filter((payment, index, self) => {
                         // @ts-ignore
                         return index === self.findIndex(p => p.value === payment.value);
-                    }));
+                    })));
             }
-        }, [setBanks, setCryptoAggregators, setBanks1, setCryptoAggregators1, exchangesBanks, cryptoAggregators, cryptoAggregators1, banks, banks1]
+        }, [setBanks, setCryptoAggregators, setBanks1, setCryptoAggregators1, exchangesBanks, cryptoAggregators, cryptoAggregators1]
     );
 
     const handleClickCombo = useCallback(
