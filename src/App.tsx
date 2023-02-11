@@ -61,8 +61,9 @@ function App() {
                         // @ts-ignore
                         return index === self.findIndex(p => p.value === payment.value);
                     }));
+                console.log(banks)
             }
-        }, [setBanks, setCryptoAggregators, setBanks1, setCryptoAggregators1, exchangesBanks, cryptoAggregators, cryptoAggregators1]
+        }, [setBanks, setCryptoAggregators, setBanks1, setCryptoAggregators1, exchangesBanks, cryptoAggregators, cryptoAggregators1, banks]
     );
 
     const handleClickCombo = useCallback(
