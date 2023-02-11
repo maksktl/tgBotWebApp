@@ -45,18 +45,17 @@ function App() {
             const setArray = type === 'bank' ? (aggreg === 'aggreg1' ? setBanks : setBanks1) : (aggreg === 'aggreg1' ? setCryptoAggregators : setCryptoAggregators1);
             setArray((prev) =>
                 prev.map((item, i) => {
-                    if (i !== index) {
-                        return item;
+                    if (i === index) {
+                        return {...item, selected};
                     }
-                    const temp = Object.assign({}, item, {selected: selected});
-                    return temp;
+                    return item;
                 })
             );
             console.log(cryptoAggregators)
             if (type === 'crypto') {
                 (aggreg === 'aggreg1' ? setBanks : setBanks1)((aggreg === 'aggreg1' ? cryptoAggregators : cryptoAggregators1)
                     .filter(exchange => exchange.selected)
-                    .reduce((result: Array<{value: string, selected: boolean}>, exchange: {value: string, selected: boolean}) => [
+                    .reduce((result: Array<{ value: string, selected: boolean }>, exchange: { value: string, selected: boolean }) => [
                         ...result,
                         ...exchangesBanks[exchange.value].map(payType => ({value: payType, selected: false})),
                     ], [])
