@@ -242,7 +242,7 @@ export const initialBanks: Array<{value: string, selected: boolean}> = exchanges
 //     {value: 'Сбербанк', selected: false},
 // ];
 
-export const initialAggregators = [
+export const initialAggregators: Array<{value: string, selected: boolean}> = [
     {value: 'Binance', selected: true},
     // {value: 'Garantex', selected: false},
     {value: 'Bitpapa', selected: false},
