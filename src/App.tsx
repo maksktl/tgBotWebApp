@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import {ComboBox} from './Components/ComboBox';
-import {initialFiat, initialCrypto, initialBanks, initialAggregators} from './constants';
+import {initialFiat, initialCrypto, initialBanks, initialAggregators, exchangesBanksMap} from './constants';
 import './App.scss';
 import {Inputs} from './Components/Inputs';
 import {Aggregator} from "./Components/Aggreagtor";
@@ -12,6 +12,7 @@ function App() {
     const {tg, onClose} = useTelegram();
     const [isActive1, setIsActive1] = useState(false);
     const [isActive2, setIsActive2] = useState(false);
+    const [exchangesBanks] = useState(exchangesBanksMap);
     const [banks, setBanks] = useState(initialBanks);
     const [banks1, setBanks1] = useState(initialBanks);
     const [fiat, setFiat] = useState(initialFiat);
@@ -25,7 +26,7 @@ function App() {
     const [spreadTo, setSpreadTo] = useState<string>();
     const [error, setError] = useState('');
 
-    const validateNumber = useCallback( (value: string | undefined, min: number) => {
+    const validateNumber = useCallback((value: string | undefined, min: number) => {
         return value !== undefined && value.match(/^-?(0|[1-9]\d*)(\.\d*)?$/) && Number(value) >= min;
     }, []);
 
@@ -37,7 +38,7 @@ function App() {
             setIsActive2(true);
             setIsActive1(false);
         }
-    },[setIsActive1, setIsActive2]);
+    }, [setIsActive1, setIsActive2]);
 
     const handleClick = useCallback(
         (selected: boolean, index: number, type: 'bank' | 'crypto', aggreg: 'aggreg1' | 'aggreg2') => {
@@ -47,17 +48,29 @@ function App() {
                     if (i !== index) {
                         return item;
                     }
-                    const temp = Object.assign({}, item, { selected: selected });
+                    const temp = Object.assign({}, item, {selected: selected});
                     return temp;
                 })
             );
-        }, [setBanks, setCryptoAggregators, setBanks1, setCryptoAggregators1]
+            if (type === 'crypto') {
+                (aggreg === 'aggreg1' ? setBanks : setBanks1)((aggreg === 'aggreg1' ? cryptoAggregators : cryptoAggregators1)
+                    .filter(exchange => exchange.selected)
+                    .reduce((allPayments, exchange) => {
+                        // @ts-ignore
+                        return allPayments.concat(exchangesBanks[exchange["value"]]);
+                    }, [])
+                    .filter((payment, index, self) => {
+                        // @ts-ignore
+                        return index === self.findIndex(p => p.value === payment.value);
+                    }));
+            }
+        }, [setBanks, setCryptoAggregators, setBanks1, setCryptoAggregators1, exchangesBanks, cryptoAggregators, cryptoAggregators1]
     );
 
     const handleClickCombo = useCallback(
         (type: 'crypto' | 'fiat' | 'buy-sell', value: string, isActive: boolean, aggreg?: 'aggreg1' | 'aggreg2') => {
             const changeSelection = (selectedItems: any[], setSelected: any, item_name: string) => {
-                if(isActive === false && selectedItems.filter(item => item.selected === true).length < 2) {
+                if (isActive === false && selectedItems.filter(item => item.selected === true).length < 2) {
                     tg.showAlert('Вы должны выбрать хотя бы ' + item_name);
                 } else {
                     setSelected(selectedItems.map((p) =>
@@ -68,15 +81,15 @@ function App() {
                 }
             }
 
-            if(type === 'crypto') {
+            if (type === 'crypto') {
                 changeSelection(crypto, setCrypto, 'одну криптовалюту');
-            } else if(type === 'fiat') {
+            } else if (type === 'fiat') {
                 changeSelection(fiat, setFiat, 'один фиат');
-            } else if(type === 'buy-sell') {
-                if(aggreg === 'aggreg1') {
+            } else if (type === 'buy-sell') {
+                if (aggreg === 'aggreg1') {
                     setMakerTaker(value);
                 }
-                if(aggreg === 'aggreg2') {
+                if (aggreg === 'aggreg2') {
                     setMakerTaker1(value);
                 }
             }
@@ -88,9 +101,9 @@ function App() {
         const setValue = type === 'deposit' ? setDeposit : (type === 'spread_from' ? setSpreadFrom : setSpreadTo);
         const lastValue = type === 'deposit' ? deposit : (type === 'spread_from' ? spreadFrom : spreadTo);
 
-        if(value === ''){
+        if (value === '') {
             setValue(value);
-        } else if(!validateNumber(value, 0)){
+        } else if (!validateNumber(value, 0)) {
             setValue(lastValue);
         } else {
             setValue(value);
@@ -102,12 +115,12 @@ function App() {
         const setValue = type === 'deposit' ? setDeposit : (type === 'spread_from' ? setSpreadFrom : setSpreadTo);
         let textError = type === 'deposit' ? '"Депозит"' : (type === 'spread_from' ? '"Спред от"' : '"Спред до"');
         value = value === '' ? '0' : value;
-        if(!validateNumber(value, 0)){
+        if (!validateNumber(value, 0)) {
             errorMessage = textError + ' может содержать только положительное число';
             value = '0';
         }
         setValue(value);
-        if(Number(spreadFrom) > Number(spreadTo)){
+        if (Number(spreadFrom) > Number(spreadTo)) {
             setSpreadTo(spreadFrom);
         }
 
@@ -155,7 +168,7 @@ function App() {
             deposit,
             spreadFrom,
             spreadTo,
-                cryptoAggregatorsSend: cryptoAggregators.filter(a => a.selected).map(a => a.value),
+            cryptoAggregatorsSend: cryptoAggregators.filter(a => a.selected).map(a => a.value),
             makerTaker,
             banksSend: banks.filter(a => a.selected).map(a => a.value),
             cryptoAggregatorsSend1: cryptoAggregators1.filter(a => a.selected).map(a => a.value),
@@ -181,11 +194,11 @@ function App() {
 
     const handleCloseButton = useCallback(() => {
         onClose();
-    },[onClose]);
+    }, [onClose]);
 
     return (
         <div className="App">
-            <LogoHeading />
+            <LogoHeading/>
             <p className="label">Фиат</p>
             <ComboBox values={fiat} className={'fiat'} type={'fiat'} onClick={handleClickCombo}/>
             <p className="label">Криптовалюта</p>
