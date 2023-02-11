@@ -53,11 +53,12 @@ function App() {
                 })
             );
             if (type === 'crypto') {
+                // @ts-ignore
                 (aggreg === 'aggreg1' ? setBanks : setBanks1)((aggreg === 'aggreg1' ? cryptoAggregators : cryptoAggregators1)
                     .filter(exchange => exchange.selected)
                     .map((allPayments, exchange) => {
                         // @ts-ignore
-                        return allPayments.concat(exchangesBanks[exchange["value"]]);
+                        return [...allPayments, ...exchangesBanks[exchange["value"]]];
                     }, [])
                     .filter((payment, index, self) => {
                         // @ts-ignore
