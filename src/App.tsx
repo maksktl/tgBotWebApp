@@ -44,14 +44,11 @@ function App() {
         (selected: boolean, index: number, type: 'bank' | 'crypto', aggreg: 'aggreg1' | 'aggreg2') => {
           console.log(index + ' ' + selected + ' ' + type)
             const setArray = type === 'bank' ? (aggreg === 'aggreg1' ? setBanks : setBanks1) : (aggreg === 'aggreg1' ? setCryptoAggregators : setCryptoAggregators1);
-            setArray((prev) =>
-                prev.map((item, i) => {
-                    if (i === index) {
-                        return {...item, selected};
-                    }
-                    return item;
-                })
-            );
+            setArray(prev => {
+                const updatedPrev = [...prev];
+                updatedPrev[index].selected = !updatedPrev[index].selected;
+                return updatedPrev;
+            });
             console.log(cryptoAggregators)
             if (type === 'crypto') {
                 (aggreg === 'aggreg1' ? setBanks : setBanks1)((aggreg === 'aggreg1' ? cryptoAggregators : cryptoAggregators1)
