@@ -42,6 +42,7 @@ function App() {
 
     const handleClick = useCallback(
         (selected: boolean, index: number, type: 'bank' | 'crypto', aggreg: 'aggreg1' | 'aggreg2') => {
+          console.log(index + ' ' + selected + ' ' + type)
             const setArray = type === 'bank' ? (aggreg === 'aggreg1' ? setBanks : setBanks1) : (aggreg === 'aggreg1' ? setCryptoAggregators : setCryptoAggregators1);
             setArray((prev) =>
                 prev.map((item, i) => {
