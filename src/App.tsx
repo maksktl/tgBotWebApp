@@ -60,6 +60,8 @@ function App() {
                     .filter(exchange => exchange.selected)
                     .map((allPayments, exchange) => {
                         // @ts-ignore
+                        console.log([...allPayments, ...exchangesBanks[exchange["value"]]]);
+                        // @ts-ignore
                         return [...allPayments, ...exchangesBanks[exchange["value"]]];
                     }, [])
                     .filter((payment, index, self) => {
