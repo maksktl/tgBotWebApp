@@ -52,6 +52,7 @@ function App() {
                     return temp;
                 })
             );
+            console.log(cryptoAggregators)
             if (type === 'crypto') {
                 (aggreg === 'aggreg1' ? setBanks : setBanks1)((aggreg === 'aggreg1' ? cryptoAggregators : cryptoAggregators1)
                     .filter(exchange => exchange.selected)
