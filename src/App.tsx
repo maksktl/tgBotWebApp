@@ -55,7 +55,7 @@ function App() {
             if (type === 'crypto') {
                 (aggreg === 'aggreg1' ? setBanks : setBanks1)((aggreg === 'aggreg1' ? cryptoAggregators : cryptoAggregators1)
                     .filter(exchange => exchange.selected)
-                    .reduce((allPayments, exchange) => {
+                    .map((allPayments, exchange) => {
                         // @ts-ignore
                         return allPayments.concat(exchangesBanks[exchange["value"]]);
                     }, [])
