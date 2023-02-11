@@ -56,7 +56,7 @@ function App() {
                 // @ts-ignore
                 (aggreg === 'aggreg1' ? setBanks : setBanks1)([].concat(...(aggreg === 'aggreg1' ? cryptoAggregators : cryptoAggregators1)
                     .filter(exchange => exchange.selected)
-                    .map(exchange => ({value: exchangesBanks[exchange.value], selected: false})).flat()
+                    .map(exchange => exchangesBanks[exchange.value].map(x => ({value: x, selected: false}))).flat()
                     .filter((payment, index, self) => {
                         // @ts-ignore
                         return index === self.findIndex(p => p.value === payment.value);
