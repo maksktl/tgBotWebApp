@@ -36,7 +36,7 @@ export const Stock: React.FC<Props> = ({values, onClick, type}) => {
             <Grid container sx={{ pt: '5px' }} onClick={handleClickOpenDropDown}>
                 {values.map((value, index) => {
                     return value.selected && (
-                        <BadgeBox value={value.value} index={index} onClick={handleClick}></BadgeBox>
+                        <BadgeBox value={value.value} index={index-1} onClick={handleClick}></BadgeBox>
                     )
                 })}
             </Grid>
