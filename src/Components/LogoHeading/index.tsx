@@ -5,7 +5,7 @@ export const LogoHeading: React.FC = () => {
     return (
         <Box className="LogoHeader">
             <img className="Logo" alt="logo" />
-            <h1 className="Header">Автоматизация поиска актуальных связок</h1>
+            <h1 >АВТОМАТИЗАЦИЯ ПОИСКА АКТУАЛЬНЫХ СВЯЗОК</h1>
         </Box>
     )
 };
