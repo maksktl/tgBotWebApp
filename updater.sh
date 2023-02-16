@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # Specify the path to the Git repository
-REPO_PATH="/opt/tgWebApp"
+REPO_PATH="/opt/tgBotWebApp"
 
 # Specify the path to the public directory
-PUBLIC_PATH="/opt/tgWebAp/build"
+PUBLIC_PATH="/opt/tgBotWebApp/build"
 STATIC_PATH="/usr/share/nginx/html/front"
 
 # Navigate to the Git repository

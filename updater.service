@@ -6,7 +6,7 @@ After=network.target
 User=root
 Group=root
 Type=simple
-WorkingDirectory=/opt/tgWebApp
+WorkingDirectory=/opt/tgBotWebApp
 ExecStart=updater.sh
 
 [Install]
