@@ -12,7 +12,6 @@ cd "$REPO_PATH"
 
 # Start an infinite loop
 while true; do
-  npm -v
   # Check if there are any new changes
   git fetch
   if ! git diff --quiet HEAD origin/main; then
