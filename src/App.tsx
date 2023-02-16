@@ -5,7 +5,6 @@ import {
     initialCrypto,
     initialBanks,
     initialAggregators,
-    exchangesBanksMap,
     initialAggregators1
 } from './constants';
 import './App.scss';
@@ -19,7 +18,6 @@ function App() {
     const {tg, onClose} = useTelegram();
     const [isActive1, setIsActive1] = useState(false);
     const [isActive2, setIsActive2] = useState(false);
-    const [exchangesBanks] = useState(exchangesBanksMap);
     const [banks, setBanks] = useState(initialBanks);
     const [banks1, setBanks1] = useState(initialBanks);
     const [fiat, setFiat] = useState(initialFiat);
@@ -48,27 +46,39 @@ function App() {
     }, [setIsActive1, setIsActive2]);
 
     useEffect(() => {
-        setBanks(cryptoAggregators
-            .filter(exchange => exchange.selected)
-            .reduce((result: Array<{ value: string, selected: boolean }>, exchange: { value: string, selected: boolean }) => {
-                console.log('Added ' + exchange.value + ' ' + exchange.selected)
-                return [
-                    ...result,
-                    ...exchangesBanks[exchange.value].map(payType => ({value: payType, selected: false})),
-                ]
-            }, [])
-            .filter((payment, index, self) => self.findIndex(p => p.value === payment.value) === index))
-        setBanks1(cryptoAggregators1
-            .filter(exchange => exchange.selected)
-            .reduce((result: Array<{ value: string, selected: boolean }>, exchange: { value: string, selected: boolean }) => {
-                return [
-                    ...result,
-                    ...exchangesBanks[exchange.value].map(payType => ({value: payType, selected: false})),
-                ]
-            }, [])
-            .filter((payment, index, self) => self.findIndex(p => p.value === payment.value) === index))
+        const exchangeValues = cryptoAggregators
+            .filter((exchange) => exchange.selected)
+            .map((exchange) => exchange.value)
+            .join(',');
+        const apiUrl = `${process.env.REACT_APP_API_URL}?exchanges=${exchangeValues}&fiat=RUB`;
 
-    }, [cryptoAggregators, cryptoAggregators1, exchangesBanks]);
+        fetch(apiUrl)
+            .then((response) => response.json())
+            .then((bankList) => {
+                const newBanks = bankList.map((bank: string) => ({ value: bank, selected: false }));
+                setBanks(newBanks);
+            })
+            .catch((error) => {
+                console.error('Error fetching bank list:', error);
+            });
+
+        const exchangeValues1 = cryptoAggregators1
+            .filter((exchange) => exchange.selected)
+            .map((exchange) => exchange.value)
+            .join(',');
+        const apiUrl1 = `${process.env.REACT_APP_API_URL}?exchanges=${exchangeValues1}&fiat=RUB`;
+
+        fetch(apiUrl1)
+            .then((response) => response.json())
+            .then((bankList) => {
+                const newBanks = bankList.map((bank: string) => ({ value: bank, selected: false }));
+                setBanks1(newBanks);
+            })
+            .catch((error) => {
+                console.error('Error fetching bank list:', error);
+            });
+    }, [cryptoAggregators, cryptoAggregators1]);
+
 
     const handleClick = useCallback(
         (selected: boolean, index: number, type: 'bank' | 'crypto', aggreg: 'aggreg1' | 'aggreg2') => {
