@@ -50,7 +50,8 @@ function App() {
             .filter((exchange) => exchange.selected)
             .map((exchange) => exchange.value)
             .join(',');
-        const apiUrl = `${process.env.REACT_APP_API_URL}?exchanges=${exchangeValues}&fiat=RUB`;
+        const apiUrl = `/banks?exchanges=${exchangeValues}&fiat=RUB`;
+        console.log(`${process.env.REACT_APP_API_URL}`)
 
         fetch(apiUrl)
             .then((response) => response.json())
@@ -66,7 +67,7 @@ function App() {
             .filter((exchange) => exchange.selected)
             .map((exchange) => exchange.value)
             .join(',');
-        const apiUrl1 = `${process.env.REACT_APP_API_URL}?exchanges=${exchangeValues1}&fiat=RUB`;
+        const apiUrl1 = `/banks?exchanges=${exchangeValues1}&fiat=RUB`;
 
         fetch(apiUrl1)
             .then((response) => response.json())
