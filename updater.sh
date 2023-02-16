@@ -14,7 +14,7 @@ cd "$REPO_PATH"
 # Start an infinite loop
 while true; do
   # Check if there are any new changes
-  npm -v
+  /root/.nvm/versions/node/v18.14.0/bin/npm -v
   git fetch
   if ! git diff --quiet HEAD origin/main; then
     # Fetch the latest changes from the remote repository
