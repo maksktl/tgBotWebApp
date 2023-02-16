@@ -46,6 +46,7 @@ function App() {
     }, [setIsActive1, setIsActive2]);
 
     useEffect(() => {
+
         const exchangeValues = cryptoAggregators
             .filter((exchange) => exchange.selected)
             .map((exchange) => exchange.value)

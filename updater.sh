@@ -22,12 +22,11 @@ while true; do
     # Pull the latest changes from the remote repository
     git pull
 
-
     npm install
     # Build the project using npm
     if npm run build; then
       # Copy the public directory to STATIC_PATH
-      rm -R "$STATIC_PATH"
+      rm -r "$STATIC_PATH"
       cp -R "$PUBLIC_PATH" "$STATIC_PATH"
 
       # Print a success message
