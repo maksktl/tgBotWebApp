@@ -1,0 +1,13 @@
+[Unit]
+Description=Watch for changes in Git, build project, and copy public directory to nginx static
+After=network.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+WorkingDirectory=/opt/tgWebApp
+ExecStart=updater.sh
+
+[Install]
+WantedBy=multi-user.target
