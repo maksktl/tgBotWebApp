@@ -7,6 +7,7 @@ REPO_PATH="/opt/tgBotWebApp"
 # Specify the path to the public directory
 PUBLIC_PATH="/opt/tgBotWebApp/build"
 STATIC_PATH="/usr/share/nginx/html/front"
+UPDATER_SERVICE="updater"
 
 # Navigate to the Git repository
 cd "$REPO_PATH"
@@ -20,6 +21,8 @@ while true; do
 
     # Pull the latest changes from the remote repository
     git pull
+
+
     npm install
     # Build the project using npm
     if npm run build; then
@@ -28,6 +31,10 @@ while true; do
 
       # Print a success message
       echo "Updated Git repository, built the project, and copied the public directory to /www/html"
+      # Restart updater service to run new version of updater.sh at next time
+      echo "Service restarts"
+      systemctl restart "$UPDATER_SERVICE"
+      break
     else
       # Print an error message if the build failed
       echo "Error: Build failed"
