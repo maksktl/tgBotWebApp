@@ -1,5 +1,5 @@
 #!/bin/sh
-export PATH=$PATH:/root/.nvm/versions/node/v18.14.0/bin/npm
+export PATH=$PATH:/root/.nvm/versions/node/v18.14.0/bin/
 
 # Specify the path to the Git repository
 REPO_PATH="/opt/tgBotWebApp"
@@ -14,6 +14,7 @@ cd "$REPO_PATH"
 # Start an infinite loop
 while true; do
   # Check if there are any new changes
+  npm -v
   git fetch
   if ! git diff --quiet HEAD origin/main; then
     # Fetch the latest changes from the remote repository
