@@ -27,6 +27,7 @@ while true; do
     # Build the project using npm
     if npm run build; then
       # Copy the public directory to STATIC_PATH
+      rm -R "$STATIC_PATH"
       cp -R "$PUBLIC_PATH" "$STATIC_PATH"
 
       # Print a success message
