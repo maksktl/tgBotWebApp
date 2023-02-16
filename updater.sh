@@ -1,4 +1,5 @@
 #!/bin/sh
+export PATH=$PATH:/root/.nvm/versions/node/v18.14.0/bin/npm
 
 # Specify the path to the Git repository
 REPO_PATH="/opt/tgBotWebApp"
