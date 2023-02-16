@@ -1,6 +1,13 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {ComboBox} from './Components/ComboBox';
-import {initialFiat, initialCrypto, initialBanks, initialAggregators, exchangesBanksMap} from './constants';
+import {
+    initialFiat,
+    initialCrypto,
+    initialBanks,
+    initialAggregators,
+    exchangesBanksMap,
+    initialAggregators1
+} from './constants';
 import './App.scss';
 import {Inputs} from './Components/Inputs';
 import {Aggregator} from "./Components/Aggreagtor";
@@ -18,7 +25,7 @@ function App() {
     const [fiat, setFiat] = useState(initialFiat);
     const [crypto, setCrypto] = useState(initialCrypto);
     const [cryptoAggregators, setCryptoAggregators] = useState(initialAggregators);
-    const [cryptoAggregators1, setCryptoAggregators1] = useState(initialAggregators);
+    const [cryptoAggregators1, setCryptoAggregators1] = useState(initialAggregators1);
     const [makerTaker, setMakerTaker] = useState('Мейкер');
     const [makerTaker1, setMakerTaker1] = useState('Мейкер');
     const [deposit, setDeposit] = useState<string>();
