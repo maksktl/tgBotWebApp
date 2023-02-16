@@ -88,11 +88,22 @@ function App() {
                     ));
                 }
             }
+            const changeSingleSelection = (selectedItems: any[], setSelected: any, item_name: string) => {
+                const newSelection = selectedItems.map((p) =>
+                    p.value === value
+                        ? { ...p, selected: true }
+                        : { ...p, selected: false }
+                );
+                setSelected(newSelection);
+                if (!isActive && newSelection.filter((item) => item.selected).length === 0) {
+                    tg.showAlert('Вы должны выбрать хотя бы ' + item_name);
+                }
+            };
 
             if (type === 'crypto') {
                 changeSelection(crypto, setCrypto, 'одну криптовалюту');
             } else if (type === 'fiat') {
-                changeSelection(fiat, setFiat, 'один фиат');
+                changeSingleSelection(fiat, setFiat, 'один фиат');
             } else if (type === 'buy-sell') {
                 if (aggreg === 'aggreg1') {
                     setMakerTaker(value);
