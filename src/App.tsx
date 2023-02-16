@@ -83,7 +83,7 @@ function App() {
             .catch((error) => {
                 console.error('Error fetching bank list:', error);
             });
-    }, [cryptoAggregators, cryptoAggregators1]);
+    }, [cryptoAggregators, cryptoAggregators1, fiat]);
 
 
     const handleClick = useCallback(
