@@ -46,12 +46,16 @@ function App() {
     }, [setIsActive1, setIsActive2]);
 
     useEffect(() => {
-
+        const selectedFiat = fiat.find((fiat) => fiat.selected)?.value;
+        if (!selectedFiat) {
+            console.log('No fiat selected');
+            return;
+        }
         const exchangeValues = cryptoAggregators
             .filter((exchange) => exchange.selected)
             .map((exchange) => exchange.value)
             .join(',');
-        const apiUrl = `/banks?exchanges=${exchangeValues}&fiat=RUB`;
+        const apiUrl = `/banks?exchanges=${exchangeValues}&fiat=${selectedFiat}`;
         console.log(`${process.env.REACT_APP_API_URL}`)
 
         fetch(apiUrl)
@@ -68,7 +72,7 @@ function App() {
             .filter((exchange) => exchange.selected)
             .map((exchange) => exchange.value)
             .join(',');
-        const apiUrl1 = `/banks?exchanges=${exchangeValues1}&fiat=RUB`;
+        const apiUrl1 = `/banks?exchanges=${exchangeValues1}&fiat=${selectedFiat}`;
 
         fetch(apiUrl1)
             .then((response) => response.json())
