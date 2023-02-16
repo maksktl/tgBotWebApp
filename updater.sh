@@ -14,6 +14,7 @@ cd "$REPO_PATH"
 while true; do
   # Check if there are any new changes
   git fetch
+
   if ! git diff --quiet HEAD origin/main; then
     # Fetch the latest changes from the remote repository
 
