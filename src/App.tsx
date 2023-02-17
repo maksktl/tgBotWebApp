@@ -205,7 +205,7 @@ function App() {
         }
 
         const data = {
-            fiatSend: fiat.filter(a => a.selected).map(a => a.value),
+            fiatSend: fiat.find((x) => x.selected)?.value,
             cryptoSend: crypto.filter(a => a.selected).map(a => a.value),
             deposit,
             spreadFrom,
