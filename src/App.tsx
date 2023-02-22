@@ -4,6 +4,7 @@ import {
     initialFiat,
     initialCrypto,
     initialBanks,
+    initialBanks1,
     initialAggregators,
     initialAggregators1
 } from './constants';
@@ -19,7 +20,7 @@ function App() {
     const [isActive1, setIsActive1] = useState(false);
     const [isActive2, setIsActive2] = useState(false);
     const [banks, setBanks] = useState(initialBanks);
-    const [banks1, setBanks1] = useState(initialBanks);
+    const [banks1, setBanks1] = useState(initialBanks1);
     const [fiat, setFiat] = useState(initialFiat);
     const [crypto, setCrypto] = useState(initialCrypto);
     const [cryptoAggregators, setCryptoAggregators] = useState(initialAggregators);
