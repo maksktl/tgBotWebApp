@@ -63,9 +63,9 @@ function App() {
             .then((response) => response.json())
             .then((bankList) => {
                 const newBanks = bankList.map((bank: string) => ({ value: bank, selected: false }));
-                setBanks(newBanks.map(bank => ({
+                setBanks(newBanks.map((bank: {value: string, selected: boolean})  => ({
                     ...bank,
-                    selected: banks.some(oldBank => oldBank.value === bank.value && oldBank.selected)
+                    selected: banks.some((oldBank: {value: string, selected: boolean}) => oldBank.value === bank.value && oldBank.selected)
                 })));
             })
             .catch((error) => {
@@ -82,9 +82,9 @@ function App() {
             .then((response) => response.json())
             .then((bankList) => {
                 const newBanks = bankList.map((bank: string) => ({ value: bank, selected: false }));
-                setBanks1(newBanks.map(bank => ({
+                setBanks1(newBanks.map((bank: {value: string, selected: boolean}) => ({
                     ...bank,
-                    selected: banks1.some(oldBank => oldBank.value === bank.value && oldBank.selected)
+                    selected: banks1.some((oldBank: {value: string, selected: boolean}) => oldBank.value === bank.value && oldBank.selected)
                 })));
             })
             .catch((error) => {
