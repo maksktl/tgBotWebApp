@@ -63,7 +63,10 @@ function App() {
             .then((response) => response.json())
             .then((bankList) => {
                 const newBanks = bankList.map((bank: string) => ({ value: bank, selected: false }));
-                setBanks(newBanks);
+                setBanks(newBanks.map(bank => ({
+                    ...bank,
+                    selected: banks.some(oldBank => oldBank.value === bank.value && oldBank.selected)
+                })));
             })
             .catch((error) => {
                 console.error('Error fetching bank list:', error);
@@ -79,7 +82,10 @@ function App() {
             .then((response) => response.json())
             .then((bankList) => {
                 const newBanks = bankList.map((bank: string) => ({ value: bank, selected: false }));
-                setBanks1(newBanks);
+                setBanks1(newBanks.map(bank => ({
+                    ...bank,
+                    selected: banks1.some(oldBank => oldBank.value === bank.value && oldBank.selected)
+                })));
             })
             .catch((error) => {
                 console.error('Error fetching bank list:', error);
