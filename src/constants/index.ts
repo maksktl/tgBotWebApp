@@ -34,18 +34,18 @@ export const initialBanks1: Array<{value: string, selected: boolean}> = [];
 export const initialAggregators: Array<{value: string, selected: boolean}> = [
     {value: 'Binance', selected: true},
     {value: 'Bitpapa', selected: false},
-    // {value: 'Pexpay', selected: false},
-    // {value: 'Bybit', selected: false},
-    // {value: 'Huobi', selected: false},
-    // {value: 'Kucoin', selected: false},
+    {value: 'Pexpay', selected: false},
+    {value: 'Bybit', selected: false},
+    {value: 'Huobi', selected: false},
+    {value: 'Kucoin', selected: false},
 ];
 
 
 export const initialAggregators1: Array<{value: string, selected: boolean}> = [
     {value: 'Binance', selected: true},
     {value: 'Bitpapa', selected: false},
-    // {value: 'Pexpay', selected: false},
-    // {value: 'Bybit', selected: false},
-    // {value: 'Huobi', selected: false},
-    // {value: 'Kucoin', selected: false},
+    {value: 'Pexpay', selected: false},
+    {value: 'Bybit', selected: false},
+    {value: 'Huobi', selected: false},
+    {value: 'Kucoin', selected: false},
 ];
